@@ -9,3 +9,7 @@ def test_playwrightBasics(playwright):
 # only for chromium headless mode, 1 single context
 def test_playwrightShortCut(page):
     page.goto("https://google.com/ncr")
+    
+# only for chromium headless mode, 1 single context
+def test_playwrightShortCut2(page):
+    page.goto("https://google.com/ncr")
