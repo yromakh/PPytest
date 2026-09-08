@@ -33,7 +33,7 @@ def test_child_window_handle(page: Page):
         text = childPage.locator(".im-para.red").text_content()
         print(text)
         # expect(childPage.locator(".im-para.red")).to_contain_text("mentor@rahulshettyacademy.com")
-        words = text.split("at")
+        words = str(text).split("at")
         print(words[1])
         email = words[1].strip().split()[0].strip()
         print(email)
