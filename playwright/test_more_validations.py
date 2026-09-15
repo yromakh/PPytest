@@ -31,9 +31,13 @@ def test_javascript_alerts(page: Page):
 
 def test_frame_handling(page: Page):
     page.goto("https://rahulshettyacademy.com/AutomationPractise/")
-    pageFrame = page.frame_locator("#courses-iframe")
-    pageFrame.get_by_role("link", name="All Access plan").click()
-    expect(pageFrame.locator("body")).to_contain_text("Happy Subscibers!")
+    
+    with page.expect_popup() as popup_info:
+        page.locator(".blinkingText").click()
+
+    new_page = popup_info.value
+    expect(new_page.get_by_role("link", name="Home")).to_be_visible()
+    
 
 # check the rice price is equal to 37
 def test_web_tables(page: Page):
