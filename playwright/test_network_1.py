@@ -1,4 +1,5 @@
 from playwright.sync_api import Page, expect
+import pytest
 
 the_url = "https://rahulshettyacademy.com/client/"
 the_username = "whyrom@ukr.net"
@@ -15,6 +16,7 @@ def intercept_response(route):
     ) 
 
 # {"data":[],"message":"No Orders"}
+@pytest.mark.smoke
 def test_network_one_intercept_response(page: Page):
     page.goto(the_url)
     page.route("https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/*", intercept_response)

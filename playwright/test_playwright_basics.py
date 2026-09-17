@@ -2,6 +2,7 @@ import re
 import time
 
 from playwright.sync_api import Page, Playwright, expect
+import pytest
 
 def test_playwrightBasics(playwright):
     browser = playwright.chromium.launch(headless=False)
@@ -50,8 +51,9 @@ def test_user_is_redirected_to_interview_page_successfully(page: Page):
     expect(page1.get_by_role("heading", name="Documents request")).to_be_visible()
     
     time.sleep(5)
-
-def test_firefox_browser(playwright: Playwright):
+    
+@pytest.mark.skip(reason="Skipping this test for now")
+def test_firefox_browser_0(playwright: Playwright):
     browser = playwright.firefox.launch(headless=False)
     context = browser.new_context()
     page = context.new_page()
@@ -60,8 +62,33 @@ def test_firefox_browser(playwright: Playwright):
     page.locator("#username").fill("rahulshettyacademy")
     page.locator("#password").fill("Learning@830$3mK2")    
     page.get_by_role("combobox").select_option("teach")
-    page.locator("#terms").check()
+    page.get_by_role("checkbox", name="I agree to the terms and conditions").check()
     page.get_by_role("link", name="terms and conditions").click()
     page.get_by_role("button", name="Sign In").click()
     
     expect(page.get_by_role("heading", name="Shop Name")).to_be_visible()
+    
+def test_firefox_browser(playwright: Playwright):
+    browser = playwright.firefox.launch(headless=False)
+
+    try:
+        context = browser.new_context()
+        page = context.new_page()
+
+        page.goto(
+            "https://rahulshettyacademy.com/loginpagePractise/",
+            wait_until="domcontentloaded",
+        )
+
+        page.locator("#username").fill("rahulshettyacademy")
+        page.locator("#password").fill("Learning@830$3mK2")
+        page.get_by_role("combobox").select_option("teach")
+        page.locator("#terms").check()
+
+        page.get_by_role("link", name="terms and conditions").click()
+        page.get_by_role("button", name="Sign In").click()
+
+        expect(page.get_by_role("heading", name="Shop Name")).to_be_visible()
+
+    finally:
+        browser.close()

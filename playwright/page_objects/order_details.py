@@ -1,0 +1,8 @@
+from playwright.sync_api import expect
+
+class OrderDetailsPage:
+    def __init__(self, page):
+        self._page = page
+        
+    def verify_order_message(self):
+        expect(self._page.locator(".email-preheader")).to_contain_text("Thank you for Shopping With Us")
