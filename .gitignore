@@ -1,0 +1,14 @@
+# Virtual environment
+venv3/
+
+# Python cache
+__pycache__/
+
+# Pytest cache
+.pytest_cache/
+
+# HTML reports
+test-results/
+
+# IDE
+.vscode/
